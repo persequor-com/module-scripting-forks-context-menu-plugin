@@ -10,7 +10,7 @@
 )
   Search(v-if="searchBar", v-model="filter", @search="onSearch")
   Item(v-for='item in filtered'
-    :key="item.title"
+    :key="item.key||item.title"
     :item="item"
     :args="args"
     :delay="delay / 2"
@@ -79,20 +79,20 @@ export default {
     hide() {
       this.visible = false;
     },
-    additem(title, onClick, path = []) {
+    additem(key, title, onClick, path = []) {
       let items = this.items;
       for(let level of path) {
         let exist = items.find(i => i.title === level);
 
         if(!exist) {
-          exist = { title: level, subitems: [] };
+          exist = { key: level, title: level, subitems: [] };
           items.push(exist)
         }
 
         items = exist.subitems || (exist.subitems = []);
       }
 
-      items.push({ title, onClick });
+      items.push({ key: key, title: title, onClick: onClick });
     },
   },
   updated() {
