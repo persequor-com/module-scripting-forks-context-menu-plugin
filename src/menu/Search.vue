@@ -1,17 +1,27 @@
 <template lang="pug">
 .search
-  input(v-model="value")
+  input(v-model="value", placeholder="Search")
 </template>
 
 <script>
-export default {
-  props: ['value', 'search'],
+// https://www.digitalocean.com/community/tutorials/vuejs-global-event-bus
+export const EventBus = new Vue();
+
+export const Search = {
+  name: 'Search',
+  data: function() {
+    return {
+      value: ''
+    }
+  },
   watch: {
-    value() {
-      this.$emit('search', this.value);
+    value(newValue) {
+      EventBus.$emit('search', newValue);
     }
   }
 }
+
+export default Search;
 </script>
 
 
