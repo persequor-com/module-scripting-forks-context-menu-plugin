@@ -20,7 +20,7 @@ import hideMixin from './debounceHide'
 export default {
   name: 'Item',
   mixins: [hideMixin('hideSubitems')],
-  props: { item: Object, args: Object },
+  props: { item: Object, args: Object, currentItem: {type:Object, default: null} },
   data() {
     return {
       visibleSubitems: false, 
@@ -31,8 +31,16 @@ export default {
       return this.item.subitems
     }
   },
+  watch: {
+    currentItem(val) {
+      if (val && val !== this.item) {
+        this.hideSubitems();
+      }
+    }
+  },
   methods: {
     showSubitems() {
+      this.$emit('setCurrentItem');
       this.visibleSubitems = true;
       this.cancelHide();
     },

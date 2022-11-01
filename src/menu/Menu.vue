@@ -12,8 +12,10 @@
   Item(v-for='item in filtered'
     :key="item.title"
     :item="item"
+    :current-item="currentItem"
     :args="args"
     :delay="delay / 2"
+    @setCurrentItem="currentItem = item"
   )
 </template>
 
@@ -34,6 +36,7 @@ export default {
       args: {},
       filter: '',
       items: [],
+      currentItem: null,
     }
   },
   computed: {
