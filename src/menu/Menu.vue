@@ -8,11 +8,10 @@
   @contextmenu.prevent=""
   @wheel.stop=""
 )
-  Search(v-if="searchBar", v-model="filter")
+  Search(v-if="searchBar", v-model="filter", @search="onSearch")
   Item(v-for='item in filtered'
     :key="item.key||item.title"
     :item="item"
-    :searchKeep="$props.searchKeep"
     :args="args"
     :delay="delay / 2"
   )
@@ -21,7 +20,7 @@
 <script>
 import hideMixin from './debounceHide'
 import Item from './Item.vue';
-import { EventBus, Search } from './Search.vue';
+import Search from './Search.vue';
 import { fitViewport } from '../utils';
 
 export default {
@@ -48,13 +47,24 @@ export default {
       if(!this.filter) return this.items;
       const regex = new RegExp(this.filter, 'i');
       
-      return this.items
-        .filter(item => {
-          return item.title.match(regex) || this.searchKeep(item, regex)
+      return this.extractLeafs(this.items)
+        .filter(({ title }) => {
+          return this.searchKeep(title) || title.match(regex)
         });
     }
   },
   methods: {
+    extractLeafs(items) {
+      if(!items) return [];
+      let leafs = [];
+      items.map(item => {
+        if(!item.subitems) leafs.push(item)
+
+        leafs.push(...this.extractLeafs(item.subitems))
+      })
+
+      return leafs;
+    },
     onSearch(e) {
       this.filter = e;
     },
@@ -91,7 +101,6 @@ export default {
     } 
   },
   mounted() {
-    EventBus.$on('search', this.onSearch);
     this.$root.$on('show', this.show);
     this.$root.$on('hide', this.hide);
     this.$root.$on('additem', this.additem);
