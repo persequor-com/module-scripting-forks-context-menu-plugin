@@ -6,7 +6,7 @@ export default class NodeMenu extends Menu {
         super(editor, props, vueComponent);
 
         if (nodeItems['Delete'] !== false) {
-            this.addItem('Delete', 'Delete', ({ node }) => {
+            this.addItem('Delete', ({ node }) => {
                 if (editor.selected.list.indexOf(node) !== -1) {
                     editor.selected.remove(node);
                 }
@@ -15,7 +15,7 @@ export default class NodeMenu extends Menu {
             });
         }
         if (nodeItems['Clone'] !== false) {
-            this.addItem('Clone', 'Clone', async (args) => {
+            this.addItem('Clone', async (args) => {
                 const { name, position: [x, y], ...params } = args.node;
                 const component = editor.components.get(name);
                 const node = await createNode(component, { ...params, x: x + 10, y: y + 10 });
