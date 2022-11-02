@@ -17,14 +17,13 @@
   },
   "dependencies": {
     "lodash-es": "4.17.15",
-    "vue": "^2.6.6"
+    "vue": "2.5.17"
   },
   "devDependencies": {
-    "node-sass": "^4.9.3",
     "rete-cli": "0.5.0",
-    "rollup-plugin-pug": "^0.1.6",
-    "rollup-plugin-sass": "^1.2.2",
-    "rollup-plugin-vue": "^4.3.2",
-    "vue-template-compiler": "^2.6.6"
+    "rollup-plugin-pug": "0.1.6",
+    "rollup-plugin-sass": "0.6.1",
+    "rollup-plugin-vue": "4.3.2",
+    "vue-template-compiler": "2.5.17"
   }
 }
