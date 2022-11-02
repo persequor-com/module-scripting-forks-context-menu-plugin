@@ -1,19 +1,18 @@
 {
-  "name": "rete-context-menu-plugin",
-  "version": "0.6.0",
-  "description": "",
+  "name": "psqr-rete-context-menu-plugin",
+  "version": "0.6.1",
+  "description": "Fork of rete context menu plugin",
   "main": "build/context-menu-plugin.common.js",
   "module": "build/context-menu-plugin.esm.js",
   "scripts": {
-    "build": "rete --build rete.config.js",
-    "build:dev": "rete --build rete.config.js --watch",
-    "prepublishOnly": "npm run build"
+    "build": "gtimeout -s 143 5 rete --build rete.config.js",
+    "build:dev": "rete --build rete.config.js --watch"
   },
-  "author": "Vitaliy Stoliarov",
+  "author": "PSQR",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/retejs/context-menu-plugin.git"
+    "url": "https://github.com/persequor-com/module-scripting-forks-context-menu-plugin.git"
   },
   "dependencies": {
     "lodash-es": "4.17.15",
