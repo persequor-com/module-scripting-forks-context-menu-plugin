@@ -9,8 +9,10 @@
     Item(v-for="subitem in item.subitems"
       :key="subitem.title"
       :item="subitem"
+      :current-item="currentSubItem"
       :args="args"
       :delay="delay"
+      @setCurrentItem="currentSubItem = subitem"
       )
 </template>
 
@@ -23,7 +25,8 @@ export default {
   props: { item: Object, args: Object, currentItem: {type:Object, default: null} },
   data() {
     return {
-      visibleSubitems: false, 
+      visibleSubitems: false,
+      currentSubItem: null
     }
   },
   computed: {

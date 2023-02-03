@@ -1,8 +1,8 @@
 {
   "name": "psqr-rete-context-menu-plugin",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Fork of rete context menu plugin",
-  "main": "build/context-menu-plugin.common.js",
+  "main": "build/context-menu-plugin.min.js",
   "module": "build/context-menu-plugin.esm.js",
   "scripts": {
     "build": "gtimeout -s 143 5 rete --build rete.config.js",
