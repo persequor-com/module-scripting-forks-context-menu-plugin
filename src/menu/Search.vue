@@ -1,14 +1,19 @@
 <template lang="pug">
 .search
-  input(v-model="value")
+  input(v-model="searchValue")
 </template>
 
 <script>
 export default {
   props: ['value', 'search'],
+  data() {
+    return {
+      searchValue: this.value
+    }
+  },
   watch: {
-    value() {
-      this.$emit('search', this.value);
+    searchValue() {
+      this.$emit('search', this.searchValue);
     }
   }
 }

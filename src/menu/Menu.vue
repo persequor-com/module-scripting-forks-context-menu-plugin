@@ -10,7 +10,7 @@
 )
   Search(v-if="searchBar", v-model="filter", @search="onSearch")
   Item(v-for='item in filtered'
-    :key="item.title"
+    :key="'menu-item-' + item.id"
     :item="item"
     :current-item="currentItem"
     :args="args"
@@ -26,7 +26,7 @@ import Search from './Search.vue';
 import { fitViewport } from '../utils';
 
 export default {
-  props: { searchBar: Boolean, searchKeep: Function },
+  props: { searchBar: Boolean, searchKeep: Function, searchLimit: Number },
   mixins: [hideMixin('hide')],
   data() {
     return {
@@ -37,6 +37,7 @@ export default {
       filter: '',
       items: [],
       currentItem: null,
+      lastItemId: 0,
     }
   },
   computed: {
@@ -53,7 +54,8 @@ export default {
       return this.extractLeafs(this.items)
         .filter(({ title }) => {
           return this.searchKeep(title) || title.match(regex)
-        });
+        })
+        .slice(0, this.searchLimit);
     }
   },
   methods: {
@@ -88,14 +90,14 @@ export default {
         let exist = items.find(i => i.title === level);
 
         if(!exist) {
-          exist = { title: level, subitems: [] };
+          exist = { id: this.lastItemId++, title: level, subitems: [] };
           items.push(exist)
         }
 
         items = exist.subitems || (exist.subitems = []);
       }
 
-      items.push({ title, onClick });
+      items.push({ id: this.lastItemId++, title, onClick });
     },
   },
   updated() {

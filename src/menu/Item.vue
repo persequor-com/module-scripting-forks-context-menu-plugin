@@ -7,7 +7,7 @@
 ) {{item.title}}
   .subitems(v-show="hasSubitems && this.visibleSubitems")
     Item(v-for="subitem in item.subitems"
-      :key="subitem.title"
+      :key="'menu-item-' + subitem.id"
       :item="subitem"
       :current-item="currentSubItem"
       :args="args"
