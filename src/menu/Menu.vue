@@ -50,25 +50,28 @@ export default {
     filtered() {
       if(!this.filter) return this.items;
       const regex = new RegExp(this.filter, 'i');
-      
-      return this.extractLeafs(this.items)
-        .filter(({ title }) => {
-          return this.searchKeep(title) || title.match(regex)
-        })
-        .slice(0, this.searchLimit);
+      return this.items.map(item => this.filterItems(item, regex)).filter(item => item !== null);
     }
   },
   methods: {
-    extractLeafs(items) {
-      if(!items) return [];
-      let leafs = [];
-      items.map(item => {
-        if(!item.subitems) leafs.push(item)
+    filterItems(tree, regex) {
+      // Case 1: The node matches the regex, we keep it all (including children)
+      if (this.searchKeep(tree.title) || tree.title.match(regex)) {
+		return tree;
+	  }
 
-        leafs.push(...this.extractLeafs(item.subitems))
-      })
-
-      return leafs;
+      // Case 2: We have children that match the regex, we keep them and filter out the rest
+      const _this = this;
+      const subitems = !tree.subitems ? [] : tree.subitems.map(child => _this.filterItems(child, regex)).filter(child => child !== null);
+      if (subitems.length > 0) {
+        // Clone the current node and filter its children recursively
+        return {
+          ...tree,
+          subitems: subitems
+        };
+      }
+      // Default: We didn't match, neither did our children
+      return null;
     },
     onSearch(e) {
       this.filter = e;
