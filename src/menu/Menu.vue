@@ -26,7 +26,7 @@ import Search from './Search.vue';
 import { fitViewport } from '../utils';
 
 export default {
-  props: { searchBar: Boolean, searchKeep: Function, searchLimit: Number },
+  props: { searchBar: Boolean },
   mixins: [hideMixin('hide')],
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
   methods: {
     filterItems(tree, regex) {
       // Case 1: The node matches the regex, we keep it all (including children)
-      if (this.searchKeep(tree.title) || tree.title.match(regex)) {
+      if (tree.title.match(regex)) {
 		return tree;
 	  }
 

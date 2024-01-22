@@ -9,8 +9,6 @@ import ContextMenuPlugin, { Menu, Item, Search } from 'rete-context-menu-plugin'
 
 editor.use(ContextMenuPlugin, {
     searchBar: false, // true by default
-    searchKeep: title => true, // leave item when searching, optional. For example, title => ['Refresh'].includes(title)
-    searchLimit: 15, // limit the number of items to be displayed on a search
     delay: 100,
     allocate(component) {
         return ['Submenu'];

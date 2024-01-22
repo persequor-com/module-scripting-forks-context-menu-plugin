@@ -7,8 +7,6 @@ import { isFunction } from 'lodash-es';
 
 function install(editor, {
     searchBar = true,
-    searchKeep = () => false,
-    searchLimit = 15,
     delay = 1000,
     items = {},
     nodeItems = {},
@@ -38,10 +36,10 @@ function install(editor, {
         const [x, y] = [e.clientX, e.clientY];
 
         if(node) {
-            menu = new NodeMenu(editor, { searchBar: false, searchLimit, delay }, vueComponent,  isFunction(nodeItems) ? nodeItems(node) : nodeItems);
+            menu = new NodeMenu(editor, { searchBar: false, delay }, vueComponent,  isFunction(nodeItems) ? nodeItems(node) : nodeItems);
             menu.show(x, y, { node });
         } else {
-            menu = new MainMenu(editor, { searchBar, searchKeep, searchLimit, delay }, vueComponent, { items, allocate, rename });
+            menu = new MainMenu(editor, { searchBar, delay }, vueComponent, { items, allocate, rename });
             menu.show(x, y);
         }
     });
